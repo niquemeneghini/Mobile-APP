@@ -10,6 +10,6 @@ expo install react-native-toast-message
 npx expo install @react-native-async-storage/async-storage
 npx expo install react-dom react-native-web @expo/metro-runtime
 npm install -g expo-cli
-expo install expo-secure-store expo-crypto
+
 npx expo doctor --fix-dependencies
  npx expo-doctor

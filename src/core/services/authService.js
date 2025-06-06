@@ -1,7 +1,7 @@
-import * as SecureStore from 'expo-secure-store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Crypto from 'expo-crypto';
 
-// Helper para hash de senha
+// Helper para gerar o hash da senha
 async function hashPassword(password) {
   return await Crypto.digestStringAsync(
     Crypto.CryptoDigestAlgorithm.SHA256,
@@ -12,8 +12,8 @@ async function hashPassword(password) {
 export async function saveUser(email, password) {
   try {
     const hashedPassword = await hashPassword(password);
-    await SecureStore.setItemAsync('usuario_email', email);
-    await SecureStore.setItemAsync('usuario_senha_hash', hashedPassword);
+    await AsyncStorage.setItem('usuario_email', email);
+    await AsyncStorage.setItem('usuario_senha_hash', hashedPassword);
   } catch (error) {
     console.error('Erro ao salvar usuário:', error);
     throw new Error('Falha ao salvar credenciais');
@@ -22,11 +22,11 @@ export async function saveUser(email, password) {
 
 export async function checkLogin(email, password) {
   try {
-    const storedEmail = await SecureStore.getItemAsync('usuario_email');
-    const storedHash = await SecureStore.getItemAsync('usuario_senha_hash');
-    
+    const storedEmail = await AsyncStorage.getItem('usuario_email');
+    const storedHash = await AsyncStorage.getItem('usuario_senha_hash');
+
     if (!storedEmail || !storedHash) return false;
-    
+
     const inputHash = await hashPassword(password);
     return email === storedEmail && inputHash === storedHash;
   } catch (error) {
@@ -37,7 +37,7 @@ export async function checkLogin(email, password) {
 
 export async function saveUserName(name) {
   try {
-    await SecureStore.setItemAsync('usuario_nome', name);
+    await AsyncStorage.setItem('usuario_nome', name);
   } catch (error) {
     console.error('Erro ao salvar nome:', error);
     throw new Error('Falha ao salvar nome do usuário');
@@ -46,7 +46,7 @@ export async function saveUserName(name) {
 
 export async function getUserName() {
   try {
-    return await SecureStore.getItemAsync('usuario_nome');
+    return await AsyncStorage.getItem('usuario_nome');
   } catch (error) {
     console.error('Erro ao obter nome:', error);
     return null;
@@ -55,15 +55,13 @@ export async function getUserName() {
 
 export async function clearUser() {
   try {
-    await SecureStore.deleteItemAsync('usuario_email');
-    await SecureStore.deleteItemAsync('usuario_senha_hash');
-    await SecureStore.deleteItemAsync('usuario_nome');
+    await AsyncStorage.multiRemove([
+      'usuario_email',
+      'usuario_senha_hash',
+      'usuario_nome',
+    ]);
   } catch (error) {
     console.error('Erro ao limpar dados:', error);
     throw new Error('Falha ao fazer logout');
   }
-  const isAvailable = await SecureStore.isAvailableAsync();
-if (!isAvailable) {
-  throw new Error('SecureStore não está disponível neste dispositivo');
-}
 }

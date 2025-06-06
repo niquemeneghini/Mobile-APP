@@ -28,7 +28,6 @@ export default function LoginScreen({ setIsLoggedIn, navigation }) {
   };
 
   const handleLogin = async () => {
-     console.log('Botão clicado!');
     Keyboard.dismiss();
     if (!validateForm()) return;
 
@@ -43,9 +42,10 @@ export default function LoginScreen({ setIsLoggedIn, navigation }) {
       }
 
       const userName = await getUserName();
-      console.log('Login válido, setando isLoggedIn true');
+      console.log(`Login válido: ${userName}`);
       setIsLoggedIn(true);
-        navigation.reset({
+
+      navigation.reset({
         index: 0,
         routes: [{ name: 'Home', params: { userName } }],
       });
@@ -82,7 +82,6 @@ export default function LoginScreen({ setIsLoggedIn, navigation }) {
       />
 
       <TouchableOpacity
-      
         style={[styles.button, isLoading && styles.disabledButton]}
         onPress={handleLogin}
         disabled={isLoading}
@@ -93,10 +92,6 @@ export default function LoginScreen({ setIsLoggedIn, navigation }) {
         ) : (
           <Text style={styles.buttonText}>Entrar</Text>
         )}
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
-        <Text style={styles.linkText}>Esqueceu sua senha?</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>

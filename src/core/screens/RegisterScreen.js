@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+  Alert,
+} from 'react-native';
 import styles from '../styles/styles';
 import { saveUser, saveUserName } from '../../core/services/authService';
 
@@ -30,10 +37,11 @@ export default function RegisterScreen() {
 
     setIsLoading(true);
     try {
-      await saveUser(email, password);
-      await saveUserName(name);
+      await saveUser(email, password);       // Agora usando AsyncStorage
+      await saveUserName(name);              // Agora usando AsyncStorage
       Alert.alert('Sucesso', 'Cadastro realizado com sucesso!');
-      // Ex: navigation.navigate('Login');
+      // Exemplo: navegação futura
+      // navigation.navigate('Login');
     } catch (error) {
       const message =
         error.code === 'auth/email-already-in-use'
@@ -74,7 +82,11 @@ export default function RegisterScreen() {
         secureTextEntry
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleRegister} disabled={isLoading}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={handleRegister}
+        disabled={isLoading}
+      >
         {isLoading ? (
           <ActivityIndicator color="#fff" />
         ) : (
