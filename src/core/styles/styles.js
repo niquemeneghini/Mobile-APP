@@ -48,4 +48,22 @@ export default StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10
   },
+  linkButton: {
+  marginTop: 15,
+},
+linkText: {
+  color: '#3498db',
+  textAlign: 'center',
+},
+footer: {
+  flexDirection: 'row',
+  justifyContent: 'center',
+  marginTop: 20,
+},
+footerText: {
+  color: '#555',
+},
+disabledButton: {
+  opacity: 0.6,
+}
 });

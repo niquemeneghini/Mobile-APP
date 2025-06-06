@@ -9,9 +9,13 @@ export default function App() {
   return (
     <>
       <NavigationContainer>
-        <DrawerNavigator isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+        <DrawerNavigator 
+            key={isLoggedIn ? 'logged-in' : 'logged-out'} 
+            isLoggedIn={isLoggedIn} 
+            setIsLoggedIn={setIsLoggedIn} 
+        />
       </NavigationContainer>
-      <Toast /> {/* Isso exibe os toasts como "Produto adicionado!" */}
+      <Toast />
     </>
   );
 }

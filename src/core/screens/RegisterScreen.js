@@ -1,63 +1,86 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import styles from '../styles/styles';
+import { saveUser, saveUserName } from '../../core/services/authService';
 
 export default function RegisterScreen() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  async function handleRegister() {
-    try {
-      const userData = { name, email, password };
-      await AsyncStorage.setItem('@user', JSON.stringify(userData));
-      Alert.alert('Sucesso', 'Usuário registrado com sucesso');
-    } catch (error) {
-      Alert.alert('Erro', 'Não foi possível salvar os dados');
+  const validateForm = () => {
+    if (!name.trim()) {
+      Alert.alert('Erro', 'Informe seu nome completo.');
+      return false;
     }
-  }
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      Alert.alert('Erro', 'E-mail inválido.');
+      return false;
+    }
+    if (password.length < 6) {
+      Alert.alert('Erro', 'A senha deve ter no mínimo 6 caracteres.');
+      return false;
+    }
+    return true;
+  };
+
+  const handleRegister = async () => {
+    if (!validateForm()) return;
+
+    setIsLoading(true);
+    try {
+      await saveUser(email, password);
+      await saveUserName(name);
+      Alert.alert('Sucesso', 'Cadastro realizado com sucesso!');
+      // Ex: navigation.navigate('Login');
+    } catch (error) {
+      const message =
+        error.code === 'auth/email-already-in-use'
+          ? 'Este e-mail já está cadastrado.'
+          : 'Erro ao cadastrar. Tente novamente.';
+      Alert.alert('Erro', message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Registrar</Text>
-      <TextInput style={styles.input} placeholder="Nome" onChangeText={setName} />
-      <TextInput style={styles.input} placeholder="E-mail" onChangeText={setEmail} />
-      <TextInput style={styles.input} placeholder="Senha" secureTextEntry onChangeText={setPassword} />
-      <TouchableOpacity style={styles.button} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Registrar</Text>
+      <Text style={styles.title}>Criar Conta</Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Nome completo"
+        value={name}
+        onChangeText={setName}
+        autoCapitalize="words"
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="E-mail"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Senha"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
+
+      <TouchableOpacity style={styles.button} onPress={handleRegister} disabled={isLoading}>
+        {isLoading ? (
+          <ActivityIndicator color="#fff" />
+        ) : (
+          <Text style={styles.buttonText}>Cadastrar</Text>
+        )}
       </TouchableOpacity>
     </View>
   );
 }
-
-/* 
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
-import styles from '../styles/styles';
-import { saveUser, saveUserName } from '../services/authService';
-
-export default function RegisterScreen() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  async function handleRegister() {
-    await saveUser(email, password);
-    await saveUserName(name);
-    Alert.alert('Sucesso', 'Usuário registrado com sucesso');
-  }
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Registrar</Text>
-      <TextInput style={styles.input} placeholder="Nome" onChangeText={setName} />
-      <TextInput style={styles.input} placeholder="E-mail" onChangeText={setEmail} />
-      <TextInput style={styles.input} placeholder="Senha" secureTextEntry onChangeText={setPassword} />
-      <TouchableOpacity style={styles.button} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Registrar</Text>
-      </TouchableOpacity>
-    </View>
-  );
-}
-  */
