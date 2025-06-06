@@ -1,4 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions,Platform } from 'react-native';
+
+const { width, height } = Dimensions.get('window');
 
 export default StyleSheet.create({
   container: {
@@ -48,4 +50,211 @@ export default StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10
   },
+  linkButton: {
+  marginTop: 15,
+},
+linkText: {
+  color: '#3498db',
+  textAlign: 'center',
+},
+footer: {
+  flexDirection: 'row',
+  justifyContent: 'center',
+  marginTop: 20,
+},
+footerText: {
+  color: '#555',
+},
+disabledButton: {
+  opacity: 0.6,
+},
+  
+  background: {
+    flex: 1,
+    width: width,
+    height: height,
+  },
+  
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+  },
+  text: {
+    color: '#fff',
+    fontSize: 24,
+  },
+  cardTitle: {
+  fontSize: 18,
+  fontWeight: 'bold',
+  marginBottom: 5,
+},
+loadingContainer: {
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+listContainer: {
+  padding: 10,
+},
+columnWrapper: {
+  justifyContent: 'space-between',
+},
+productImage: {
+  width: '100%',
+  height: 120,
+  marginBottom: 10,
+},
+price: {
+  fontWeight: 'bold',
+  fontSize: 16,
+  marginVertical: 5,
+},
+emptyText: {
+  textAlign: 'center',
+  marginTop: 20,
+  fontSize: 16,
+  color: '#666',
+},
+card: {
+  flex: 0.48, // Para 2 colunas com espaçamento
+  marginBottom: 15,
+  padding: 10,
+  borderRadius: 8,
+  backgroundColor: '#fff',
+  ...Platform.select({
+    ios: {
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 4,
+    },
+    android: {
+      elevation: 3,
+    },
+    cartItem: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: 15,
+  marginBottom: 10,
+  backgroundColor: '#fff',
+  borderRadius: 8,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 1 },
+  shadowOpacity: 0.2,
+  shadowRadius: 2,
+  elevation: 2,
+},
+cartImage: {
+  width: 60,
+  height: 60,
+  borderRadius: 4,
+},
+itemDetails: {
+  flex: 1,
+  marginLeft: 10,
+},
+itemName: {
+  fontSize: 16,
+  fontWeight: 'bold',
+},
+itemPrice: {
+  fontSize: 14,
+  color: '#666',
+  marginVertical: 2,
+},
+quantityContainer: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginTop: 5,
+},
+quantityButton: {
+  width: 30,
+  height: 30,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: '#f0f0f0',
+  borderRadius: 15,
+},
+quantityText: {
+  fontSize: 18,
+  fontWeight: 'bold',
+},
+quantity: {
+  marginHorizontal: 10,
+  fontSize: 16,
+},
+subtotal: {
+  marginTop: 5,
+  fontSize: 14,
+  fontWeight: 'bold',
+  color: '#2ecc71',
+},
+removeButton: {
+  width: 30,
+  height: 30,
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+removeText: {
+  fontSize: 24,
+  color: '#e74c3c',
+},
+totalContainer: {
+  padding: 15,
+  borderTopWidth: 1,
+  borderTopColor: '#eee',
+},
+totalText: {
+  fontSize: 18,
+  fontWeight: 'bold',
+  textAlign: 'right',
+  marginBottom: 10,
+},
+checkoutButton: {
+  backgroundColor: '#2ecc71',
+  padding: 15,
+  borderRadius: 5,
+  alignItems: 'center',
+},
+checkoutText: {
+  color: '#fff',
+  fontWeight: 'bold',
+  fontSize: 16,
+},
+emptyContainer: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+emptyText: {
+  fontSize: 18,
+  color: '#666',
+  marginBottom: 20,
+},
+continueButton: {
+  backgroundColor: '#3498db',
+  padding: 15,
+  borderRadius: 5,
+},
+continueText: {
+  color: '#fff',
+  fontWeight: 'bold',
+},
+loadingContainer: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+listContent: {
+  paddingBottom: 20,
+},
+  }),
+  
+},
 });
