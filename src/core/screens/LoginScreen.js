@@ -57,7 +57,7 @@ export default function LoginScreen({ setIsLoggedIn, navigation }) {
 
   return (
      <ImageBackground
-      source={require('../../assets/background.jpg')}
+      source={require('../../assets/background.png')}
       style={styles.background}
       resizeMode="cover"
     >
