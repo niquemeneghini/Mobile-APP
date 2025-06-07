@@ -181,7 +181,7 @@ export default function CartScreen({ navigation }) {
 
           <View style={styles.totalContainer}>
             <Text style={styles.totalText}>Total: {calcularTotal()}</Text>
-          <TouchableOpacity
+         <TouchableOpacity
   style={styles.checkoutButton}
   onPress={() => {
     if (carrinho.length === 0) {
@@ -191,7 +191,13 @@ export default function CartScreen({ navigation }) {
         text2: 'Adicione itens antes de finalizar a compra.',
       });
     } else {
-      navigation.navigate('Checkout');
+      navigation.navigate('Pagamento', {
+        carrinho,
+        limparCarrinho: async () => {
+          await AsyncStorage.removeItem('carrinho');
+          setCarrinho([]);
+        },
+      });
     }
   }}
 >

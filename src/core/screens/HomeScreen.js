@@ -10,12 +10,10 @@ const HomeScreen = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulando carregamento assíncrono
     const timer = setTimeout(() => {
       setProdutos(produtosFake);
       setLoading(false);
     }, 500);
-
     return () => clearTimeout(timer);
   }, []);
 
@@ -23,10 +21,9 @@ const HomeScreen = () => {
     try {
       const carrinhoAtual = await AsyncStorage.getItem('carrinho');
       const novoCarrinho = carrinhoAtual ? JSON.parse(carrinhoAtual) : [];
-      
-      // Verifica se o produto já está no carrinho
+
       const produtoExistente = novoCarrinho.find(p => p.id === produto.id);
-      
+
       if (produtoExistente) {
         produtoExistente.quantidade = (produtoExistente.quantidade || 1) + 1;
       } else {
@@ -34,13 +31,14 @@ const HomeScreen = () => {
       }
 
       await AsyncStorage.setItem('carrinho', JSON.stringify(novoCarrinho));
-      
+
       Toast.show({
         type: 'success',
         text1: 'Produto adicionado!',
         text2: `${produto.nome} foi adicionado ao carrinho.`,
         position: 'bottom',
         visibilityTime: 2000,
+        autoHide: true,
       });
     } catch (error) {
       console.error('Erro ao adicionar ao carrinho:', error);
@@ -49,32 +47,35 @@ const HomeScreen = () => {
         text1: 'Erro',
         text2: 'Não foi possível adicionar ao carrinho.',
         position: 'bottom',
+        visibilityTime: 2000,
+        autoHide: true,
       });
     }
   }, []);
 
   const renderItem = useCallback(({ item }) => (
     <View style={styles.card}>
-      <Image 
-        source={{ uri: item.imagem }} 
-        style={styles.productImage} 
+      <Image
+        source={{ uri: item.imagem }}
+        style={styles.productImage}
         resizeMode="contain"
       />
-      <Text style={styles.cardTitle}>{item.nome}</Text>
+      <Text style={styles.itemName}>{item.nome}</Text>
       <Text style={styles.price}>R$ {item.preco.toFixed(2).replace('.', ',')}</Text>
       <TouchableOpacity
         style={styles.button}
         onPress={() => adicionarAoCarrinho(item)}
+        activeOpacity={0.7} // feedback visual no toque
       >
         <Text style={styles.buttonText}>Adicionar</Text>
       </TouchableOpacity>
     </View>
-  ), []);
+  ), [adicionarAoCarrinho]);
 
   if (loading) {
     return (
       <View style={[styles.container, styles.loadingContainer]}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#007bff" /> {/* cor igual ao botão */}
       </View>
     );
   }
@@ -82,23 +83,25 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Nossos Produtos</Text>
-      
+
       <FlatList
         data={produtos}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         contentContainerStyle={styles.listContainer}
-        numColumns={2} // Layout em grid
+        numColumns={2} // layout em grid
         columnWrapperStyle={styles.columnWrapper}
         ListEmptyComponent={
           <Text style={styles.emptyText}>Nenhum produto disponível</Text>
         }
       />
+      <Toast />
     </View>
   );
 };
 
 export default HomeScreen;
+
 
 /*
 import React, { useState, useEffect } from 'react';
