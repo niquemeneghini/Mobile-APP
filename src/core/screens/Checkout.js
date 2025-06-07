@@ -75,6 +75,30 @@ export default function Checkout({ route, navigation }) {
       default: return '';
     }
   };
+  const cancelarCompra = async () => {
+  try {
+    const pedidosJSON = await AsyncStorage.getItem('pedidos');
+    const pedidos = pedidosJSON ? JSON.parse(pedidosJSON) : [];
+
+    const ultimoPedido = pedidos[pedidos.length - 1];
+
+    if (ultimoPedido) {
+      // Devolve itens ao carrinho
+      await AsyncStorage.setItem('carrinho', JSON.stringify(ultimoPedido.itens));
+
+      // Remove o pedido cancelado
+      const pedidosAtualizados = pedidos.filter(p => p.id !== ultimoPedido.id);
+      await AsyncStorage.setItem('pedidos', JSON.stringify(pedidosAtualizados));
+    }
+
+    Alert.alert('Compra cancelada', 'Produtos devolvidos ao carrinho.');
+    navigation.navigate('Carrinho');
+  } catch (error) {
+    console.error('Erro ao cancelar compra:', error);
+    Alert.alert('Erro', 'Não foi possível cancelar o pedido.');
+  }
+};
+
 
   const renderItemCarrinho = ({ item }) => (
     <View style={styles.itemContainer}>

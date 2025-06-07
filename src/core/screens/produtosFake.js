@@ -4,6 +4,10 @@ const produtosFake = [
   { id: 4, nome: "Produto C", preco: 30.0, imagem: 'https://i.ibb.co/BVjnNr2G/5f0b0f74-1ad2-4d3e-8f1f-377eba6be748.jpg'},
   { id: 5, nome: "Produto D", preco: 70.0, imagem: 'https://i.ibb.co/BVjnNr2G/5f0b0f74-1ad2-4d3e-8f1f-377eba6be748.jpg'},
   { id: 6, nome: "Produto E", preco: 50.0, imagem: 'https://i.ibb.co/BVjnNr2G/5f0b0f74-1ad2-4d3e-8f1f-377eba6be748.jpg'},
+  { id: 7, nome: "Produto F", preco: 50.0, imagem: 'https://i.ibb.co/BVjnNr2G/5f0b0f74-1ad2-4d3e-8f1f-377eba6be748.jpg'},
+  { id: 8, nome: "Produto G", preco: 50.0, imagem: 'https://i.ibb.co/BVjnNr2G/5f0b0f74-1ad2-4d3e-8f1f-377eba6be748.jpg'},
+  { id: 9, nome: "Produto H", preco: 50.0, imagem: 'https://i.ibb.co/BVjnNr2G/5f0b0f74-1ad2-4d3e-8f1f-377eba6be748.jpg'},
+  { id: 10, nome: "Produto I", preco: 50.0, imagem: 'https://i.ibb.co/BVjnNr2G/5f0b0f74-1ad2-4d3e-8f1f-377eba6be748.jpg'},
 ];
 
 export default produtosFake;

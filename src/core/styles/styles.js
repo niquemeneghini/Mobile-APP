@@ -384,5 +384,58 @@ checkoutText: {
   fontSize: 18,
   fontWeight: '700',
 },
+// Adicione isso ao seu StyleSheet.create({ ... })
+registerContainer: {
+  flex: 1,
+  padding: 25,
+  backgroundColor: '#f8f9fa',
+},
+registerTitle: {
+  fontSize: 26,
+  fontWeight: '700',
+  marginBottom: 30,
+  color: '#2c3e50',
+  textAlign: 'center',
+},
+inputError: {
+  borderColor: '#e74c3c',
+},
+errorText: {
+  color: '#e74c3c',
+  fontSize: 14,
+  marginTop: -10,
+  marginBottom: 12,
+  paddingLeft: 10,
+},
+passwordHint: {
+  fontSize: 12,
+  color: '#7f8c8d',
+  marginTop: -10,
+  marginBottom: 15,
+  paddingLeft: 10,
+},
+registerButton: {
+  backgroundColor: '#2ecc71',
+  padding: 15,
+  borderRadius: 8,
+  marginTop: 20,
+  alignItems: 'center',
+},
+disabledButton: {
+  backgroundColor: '#95a5a6',
+},
+loginLinkContainer: {
+  flexDirection: 'row',
+  justifyContent: 'center',
+  marginTop: 20,
+},
+loginLinkText: {
+  color: '#7f8c8d',
+},
+loginLink: {
+  color: '#3498db',
+  marginLeft: 5,
+  fontWeight: '600',
+},
 
 });
