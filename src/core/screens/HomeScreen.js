@@ -55,7 +55,7 @@ const HomeScreen = ({ navigation }) => {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity 
-          onPress={() => navigation.navigate('Cart')}
+          onPress={() => navigation.navigate('Carrinho')}
           style={{ marginRight: 15 }}
         >
           <View style={{ position: 'relative' }}>
