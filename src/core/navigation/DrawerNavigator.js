@@ -1,6 +1,6 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { Button, View } from 'react-native';
+import { Button, View, Text } from 'react-native';
 
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
@@ -23,20 +23,23 @@ export default function DrawerNavigator({ isLoggedIn, setIsLoggedIn }) {
           <Drawer.Screen name="Meus Pedidos" component={OrdersScreen} />
           <Drawer.Screen name="Perfil" component={ProfileScreen} />
           <Drawer.Screen
-            name="Sair"
-            component={() => <View />} // componente vazio
-            options={{
-              drawerLabel: () => (
-                <Button
-                  title="Logoff"
-                  onPress={async () => {
+  name="Sair"
+  component={() => <View />} // componente vazio
+  options={{
+    drawerLabel: ({ color }) => (
+      <Text style={{ color }}>Sair</Text>
+    ),
+    drawerItemStyle: { backgroundColor: 'transparent' },
+    // manipule a ação fora do botão (abaixo)
+  }}
+  listeners={{
+    drawerItemPress: async (e) => {
+      e.preventDefault(); // impedir navegação
+      setIsLoggedIn(false); // faz logoff
+    },
+  }}
+/>
 
-                    setIsLoggedIn(false);
-                  }}
-                />
-              ),
-            }}
-          />
         </>
       ) : (
         <>

@@ -136,96 +136,65 @@ card: {
     android: {
       elevation: 3,
     },
-    cartItem: {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  padding: 15,
-  marginBottom: 10,
-  backgroundColor: '#fff',
-  borderRadius: 8,
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 1 },
-  shadowOpacity: 0.2,
-  shadowRadius: 2,
-  elevation: 2,
-},
-cartImage: {
-  width: 60,
-  height: 60,
-  borderRadius: 4,
-},
+    
 itemDetails: {
   flex: 1,
-  marginLeft: 10,
+  flexDirection: 'column',
 },
 itemName: {
   fontSize: 16,
-  fontWeight: 'bold',
+  fontWeight: '600',
+  marginBottom: 4,
 },
 itemPrice: {
   fontSize: 14,
-  color: '#666',
-  marginVertical: 2,
+  color: '#444',
 },
-quantityContainer: {
-  flexDirection: 'row',
-  alignItems: 'center',
-  marginTop: 5,
-},
+
 quantityButton: {
-  width: 30,
-  height: 30,
-  justifyContent: 'center',
-  alignItems: 'center',
-  backgroundColor: '#f0f0f0',
-  borderRadius: 15,
+  backgroundColor: '#ddd',
+  paddingHorizontal: 10,
+  paddingVertical: 4,
+  borderRadius: 5,
 },
-quantityText: {
-  fontSize: 18,
-  fontWeight: 'bold',
-},
+
 quantity: {
-  marginHorizontal: 10,
+  marginHorizontal: 8,
   fontSize: 16,
 },
-subtotal: {
-  marginTop: 5,
-  fontSize: 14,
-  fontWeight: 'bold',
-  color: '#2ecc71',
-},
+
 removeButton: {
-  width: 30,
-  height: 30,
-  justifyContent: 'center',
-  alignItems: 'center',
+  marginLeft: 10,
+  backgroundColor: '#ff6666',
+  borderRadius: 5,
+  padding: 6,
 },
 removeText: {
-  fontSize: 24,
-  color: '#e74c3c',
+  color: '#fff',
+  fontWeight: 'bold',
+  fontSize: 16,
 },
 totalContainer: {
   padding: 15,
   borderTopWidth: 1,
-  borderTopColor: '#eee',
+  borderColor: '#eee',
 },
 totalText: {
   fontSize: 18,
   fontWeight: 'bold',
-  textAlign: 'right',
-  marginBottom: 10,
+  color: '#000',
+  marginBottom: 8,
 },
 checkoutButton: {
-  backgroundColor: '#2ecc71',
-  padding: 15,
-  borderRadius: 5,
+  backgroundColor: '#28a745',
+  padding: 12,
+  borderRadius: 6,
   alignItems: 'center',
 },
 checkoutText: {
   color: '#fff',
-  fontWeight: 'bold',
   fontSize: 16,
+  fontWeight: 'bold',
 },
 emptyContainer: {
   flex: 1,
@@ -254,6 +223,36 @@ loadingContainer: {
 listContent: {
   paddingBottom: 20,
 },
+cartImage: {
+  width: 70,
+  height: 70,
+  borderRadius: 8,
+  marginRight: 12,
+},
+ 
+cartItem: {
+  flexDirection: 'row',
+  padding: 10,
+  borderBottomWidth: 1,
+  borderColor: '#ccc',
+  alignItems: 'center',
+},
+quantityContainer: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginTop: 8,
+},
+
+quantityText: {
+  fontSize: 18,
+  fontWeight: '600',
+},
+subtotal: {
+  marginTop: 6,
+  fontWeight: '500',
+  color: '#333',
+},
+
   }),
   
 },
