@@ -437,5 +437,92 @@ loginLink: {
   marginLeft: 5,
   fontWeight: '600',
 },
+// Adicione ao seu StyleSheet.create({ ... })
+homeContainer: {
+  flex: 1,
+  padding: 15,
+  backgroundColor: '#f5f5f5',
+},
+gridCard: {
+  flex: 1,
+  margin: 8,
+  padding: 12,
+  borderRadius: 12,
+  backgroundColor: '#fff',
+  ...Platform.select({
+    ios: {
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 6,
+    },
+    android: {
+      elevation: 4,
+    },
+  }),
+},
+gridImage: {
+  width: '100%',
+  height: 120,
+  borderRadius: 8,
+  marginBottom: 8,
+},
+gridTitle: {
+  fontSize: 14,
+  fontWeight: '600',
+  color: '#333',
+  marginBottom: 4,
+  height: 40, // altura fixa para evitar desalinhamento
+},
+gridPrice: {
+  fontSize: 16,
+  fontWeight: 'bold',
+  color: '#2ecc71',
+  marginVertical: 6,
+},
+gridButton: {
+  backgroundColor: '#3498db',
+  padding: 8,
+  borderRadius: 6,
+  alignItems: 'center',
+  marginTop: 'auto', // empurra o botão para baixo
+},
+searchContainer: {
+  padding: 10,
+  marginBottom: 10,
+},
+searchInput: {
+  backgroundColor: '#fff',
+  padding: 10,
+  borderRadius: 8,
+  borderWidth: 1,
+  borderColor: '#ddd',
+},cartBadge: {
+  position: 'absolute',
+  right: -8,
+  top: -5,
+  backgroundColor: '#e74c3c',
+  borderRadius: 10,
+  width: 20,
+  height: 20,
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+cartBadgeText: {
+  color: '#fff',
+  fontSize: 12,
+  fontWeight: 'bold',
+},
+searchIcon: {
+  position: 'absolute',
+  right: 15,
+  top: 12,
+},
+emptyContainer: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: 20,
+},
 
 });

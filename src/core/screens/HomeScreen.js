@@ -1,21 +1,75 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+  TextInput,
+  RefreshControl
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from 'react-native-vector-icons/MaterialIcons'; // Adicione esta linha
 import styles from '../styles/styles';
 import Toast from 'react-native-toast-message';
 import produtosFake from '../screens/produtosFake';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const [produtos, setProdutos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [cartItemCount, setCartItemCount] = useState(0);
+  
+  // Filtra produtos baseado na busca
+  const filteredProdutos = produtos.filter(produto =>
+    produto.nome.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
+  // Carrega a quantidade de itens no carrinho
+  const loadCartCount = useCallback(async () => {
+    try {
+      const cart = await AsyncStorage.getItem('carrinho');
+      const cartItems = cart ? JSON.parse(cart) : [];
+      setCartItemCount(cartItems.reduce((total, item) => total + (item.quantidade || 1), 0));
+    } catch (error) {
+      console.error('Erro ao carregar carrinho:', error);
+    }
+  }, []);
+
+  const carregarProdutos = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
       setProdutos(produtosFake);
       setLoading(false);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, []);
+      setRefreshing(false);
+      loadCartCount(); // Atualiza contador do carrinho
+    }, 800);
+  }, [loadCartCount]);
+
+  useEffect(() => {
+    carregarProdutos();
+    
+    // Configura o botão do carrinho no header
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity 
+          onPress={() => navigation.navigate('Cart')}
+          style={{ marginRight: 15 }}
+        >
+          <View style={{ position: 'relative' }}>
+            <Icon name="shopping-cart" size={24} color="#fff" />
+            {cartItemCount > 0 && (
+              <View style={styles.cartBadge}>
+                <Text style={styles.cartBadgeText}>{cartItemCount}</Text>
+              </View>
+            )}
+          </View>
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation, carregarProdutos, cartItemCount]);
 
   const adicionarAoCarrinho = useCallback(async (produto) => {
     try {
@@ -31,6 +85,7 @@ const HomeScreen = () => {
       }
 
       await AsyncStorage.setItem('carrinho', JSON.stringify(novoCarrinho));
+      loadCartCount(); // Atualiza o contador
 
       Toast.show({
         type: 'success',
@@ -38,7 +93,6 @@ const HomeScreen = () => {
         text2: `${produto.nome} foi adicionado ao carrinho.`,
         position: 'bottom',
         visibilityTime: 2000,
-        autoHide: true,
       });
     } catch (error) {
       console.error('Erro ao adicionar ao carrinho:', error);
@@ -47,61 +101,96 @@ const HomeScreen = () => {
         text1: 'Erro',
         text2: 'Não foi possível adicionar ao carrinho.',
         position: 'bottom',
-        visibilityTime: 2000,
-        autoHide: true,
       });
     }
-  }, []);
+  }, [loadCartCount]);
 
   const renderItem = useCallback(({ item }) => (
-    <View style={styles.card}>
+    <TouchableOpacity 
+      style={styles.gridCard}
+      onPress={() => navigation.navigate('ProductDetail', { product: item })}
+      activeOpacity={0.9}
+    >
       <Image
         source={{ uri: item.imagem }}
-        style={styles.productImage}
+        style={styles.gridImage}
         resizeMode="contain"
       />
-      <Text style={styles.itemName}>{item.nome}</Text>
-      <Text style={styles.price}>R$ {item.preco.toFixed(2).replace('.', ',')}</Text>
+      <Text style={styles.gridTitle} numberOfLines={2}>{item.nome}</Text>
+      <Text style={styles.gridPrice}>R$ {item.preco.toFixed(2).replace('.', ',')}</Text>
       <TouchableOpacity
-        style={styles.button}
-        onPress={() => adicionarAoCarrinho(item)}
-        activeOpacity={0.7} // feedback visual no toque
+        style={styles.gridButton}
+        onPress={(e) => {
+          e.stopPropagation(); // Evita navegar para detalhes ao clicar no botão
+          adicionarAoCarrinho(item);
+        }}
+        activeOpacity={0.7}
       >
         <Text style={styles.buttonText}>Adicionar</Text>
       </TouchableOpacity>
-    </View>
-  ), [adicionarAoCarrinho]);
+    </TouchableOpacity>
+  ), [adicionarAoCarrinho, navigation]);
 
   if (loading) {
     return (
       <View style={[styles.container, styles.loadingContainer]}>
-        <ActivityIndicator size="large" color="#007bff" /> {/* cor igual ao botão */}
+        <ActivityIndicator size="large" color="#3498db" />
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Nossos Produtos</Text>
+    <View style={styles.homeContainer}>
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Buscar produtos..."
+          placeholderTextColor="#999"
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
+        <Icon 
+          name="search" 
+          size={20} 
+          color="#999" 
+          style={styles.searchIcon}
+        />
+      </View>
 
       <FlatList
-        data={produtos}
+        data={filteredProdutos}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         contentContainerStyle={styles.listContainer}
-        numColumns={2} // layout em grid
+        numColumns={2}
         columnWrapperStyle={styles.columnWrapper}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={carregarProdutos}
+            colors={['#3498db']}
+            tintColor="#3498db"
+          />
+        }
         ListEmptyComponent={
-          <Text style={styles.emptyText}>Nenhum produto disponível</Text>
+          <View style={styles.emptyContainer}>
+            <Icon name="search-off" size={50} color="#ccc" />
+            <Text style={styles.emptyText}>
+              {searchQuery ? 'Nenhum produto encontrado' : 'Nenhum produto disponível'}
+            </Text>
+          </View>
+        }
+        ListHeaderComponent={
+          <Text style={styles.title}>Nossos Produtos</Text>
         }
       />
+      
       <Toast />
     </View>
   );
 };
 
 export default HomeScreen;
-
 
 /*
 import React, { useState, useEffect } from 'react';
