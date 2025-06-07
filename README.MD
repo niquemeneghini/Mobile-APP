@@ -13,3 +13,6 @@ npm install -g expo-cli
 
 npx expo doctor --fix-dependencies
  npx expo-doctor
+
+
+npm install react-native-vector-icons
