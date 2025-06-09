@@ -8,6 +8,29 @@ async function hashPassword(password) {
     password
   );
 }
+export async function getUserEmail() {
+  try {
+    return await AsyncStorage.getItem('usuario_email');
+  } catch (error) {
+    console.error('Erro ao obter email:', error);
+    return null;
+  }
+}
+
+export async function getUserCreatedAt() {
+  try {
+    const dateISO = await AsyncStorage.getItem('usuario_createdAt');
+    if (dateISO) {
+      const date = new Date(dateISO);
+      return date.toLocaleDateString('pt-BR');
+    }
+    return null;
+  } catch (error) {
+    console.error('Erro ao obter data de criação:', error);
+    return null;
+  }
+}
+
 
 export async function saveUser(email, password) {
   try {

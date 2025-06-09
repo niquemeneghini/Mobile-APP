@@ -204,14 +204,7 @@ const LoginScreen = ({ setIsLoggedIn, navigation }) => {
                 ) : (
                   <Text style={styles.buttonText}>Entrar</Text>
                 )}
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.forgotPassword}
-                onPress={handleForgotPassword}
-              >
-                <Text style={styles.linkText}>Esqueceu sua senha?</Text>
-              </TouchableOpacity>
+              </TouchableOpacity>  
             </View>
 
             <View style={styles.footer}>

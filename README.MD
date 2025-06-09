@@ -20,3 +20,4 @@ npm install react-native-vector-icons
 npm install --global @expo/ngrok@^4.1.0
 
 npm install react-native-credit-card-input
+expo install expo-image-picker

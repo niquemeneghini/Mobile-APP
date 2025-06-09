@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions, Platform } from 'react-native';
-
+import * as ImagePicker from 'expo-image-picker';
 const { width, height } = Dimensions.get('window');
 
 export default StyleSheet.create({
@@ -96,7 +96,7 @@ export default StyleSheet.create({
     marginTop: 15,
   },
   linkText: {
-    color: '#3498db',
+    color: 'rgba(255, 251, 0, 0.4)',
     textAlign: 'center',
   },
   footer: {
@@ -105,7 +105,7 @@ export default StyleSheet.create({
     marginTop: 20,
   },
   footerText: {
-    color: '#555',
+    color: 'rgba(255, 251, 0, 0.4)',
   },
   disabledButton: {
     opacity: 0.6,

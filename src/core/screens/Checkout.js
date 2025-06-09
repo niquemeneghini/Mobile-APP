@@ -242,13 +242,13 @@ export default function Checkout({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#FFFFFF',
     padding: 16,
   },
   titulo: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#002776',
     marginBottom: 20,
     textAlign: 'center',
   },
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   itemContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
     borderRadius: 8,
     padding: 16,
     marginBottom: 12,
@@ -271,11 +271,11 @@ const styles = StyleSheet.create({
   itemNome: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#333',
+    color: '#002776',
   },
   itemPreco: {
     fontSize: 14,
-    color: '#666',
+    color: '#009739',
     marginTop: 4,
   },
   itemQuantidadeContainer: {
@@ -283,12 +283,12 @@ const styles = StyleSheet.create({
   },
   itemQuantidade: {
     fontSize: 14,
-    color: '#666',
+    color: '#009739',
   },
   itemSubtotal: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#6200ee',
+    color: '#FFDF00',
     marginTop: 4,
   },
   resumoContainer: {
@@ -297,25 +297,25 @@ const styles = StyleSheet.create({
   resumoTexto: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#002776',
   },
   totalContainer: {
     borderTopWidth: 1,
-    borderTopColor: '#ddd',
+    borderTopColor: '#ccc',
     paddingTop: 16,
     marginTop: 8,
   },
   totalTexto: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#002776',
     textAlign: 'right',
   },
   listaVazia: {
     textAlign: 'center',
     marginTop: 40,
     fontSize: 16,
-    color: '#666',
+    color: '#009739',
   },
   secaoPagamento: {
     marginTop: 20,
@@ -324,13 +324,13 @@ const styles = StyleSheet.create({
   tituloSecao: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#002776',
     marginBottom: 16,
   },
   botaoMetodo: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
     borderRadius: 8,
     padding: 16,
     marginBottom: 12,
@@ -338,14 +338,14 @@ const styles = StyleSheet.create({
   },
   botaoMetodoSelecionado: {
     borderWidth: 2,
-    borderColor: '#6200ee',
-    backgroundColor: '#f3e5ff',
+    borderColor: '#009739',
+    backgroundColor: '#E0F2E9',
   },
   textoMetodo: {
     fontSize: 16,
     marginLeft: 12,
     flex: 1,
-    color: '#333',
+    color: '#002776',
   },
   secaoCartao: {
     marginTop: 20,
@@ -358,16 +358,16 @@ const styles = StyleSheet.create({
   },
   textoVoltar: {
     fontSize: 16,
-    color: '#6200ee',
+    color: '#009739',
     marginLeft: 8,
   },
   rotuloCartao: {
     fontSize: 14,
-    color: '#666',
+    color: '#009739',
   },
   inputCartao: {
     fontSize: 16,
-    color: '#333',
+    color: '#002776',
   },
   botoesContainer: {
     flexDirection: 'row',
@@ -376,7 +376,7 @@ const styles = StyleSheet.create({
   },
   botaoCancelar: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderColor: '#d32f2f',
     borderRadius: 8,
@@ -391,7 +391,7 @@ const styles = StyleSheet.create({
   },
   botaoConfirmar: {
     flex: 2,
-    backgroundColor: '#6200ee',
+    backgroundColor: '#009739',
     borderRadius: 8,
     padding: 16,
     alignItems: 'center',
@@ -400,7 +400,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   textoBotaoConfirmar: {
-    color: '#fff',
+    color: '#FFFFFF',
     fontWeight: 'bold',
     fontSize: 16,
   },

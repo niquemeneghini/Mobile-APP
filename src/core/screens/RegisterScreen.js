@@ -51,6 +51,8 @@ export default function RegisterScreen({ navigation }) {
     try {
       await saveUser(email, password);
       await saveUserName(name);
+      const createdAt = new Date().toLocaleDateString('pt-BR');
+       await saveUserCreatedAt(createdAt);
       Alert.alert('Sucesso', 'Cadastro realizado com sucesso!');
       navigation.navigate('Login'); // Assumindo que você tem uma tela de login
     } catch (error) {
