@@ -8,7 +8,7 @@ import {
   Alert,
 } from 'react-native';
 import styles from '../styles/styles';
-import { saveUser, saveUserName } from '../../core/services/authService';
+import { saveUser } from '../../core/services/authService';
 
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState('');
@@ -49,12 +49,10 @@ export default function RegisterScreen({ navigation }) {
 
     setIsLoading(true);
     try {
-      await saveUser(email, password);
-      await saveUserName(name);
-      const createdAt = new Date().toLocaleDateString('pt-BR');
-       await saveUserCreatedAt(createdAt);
+      const createdAt = new Date().toISOString();
+      await saveUser(email, password, false, name, createdAt);
       Alert.alert('Sucesso', 'Cadastro realizado com sucesso!');
-      navigation.navigate('Login'); // Assumindo que você tem uma tela de login
+      navigation.navigate('Login');
     } catch (error) {
       const message =
         error.code === 'auth/email-already-in-use'

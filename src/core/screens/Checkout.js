@@ -3,6 +3,7 @@ import { View, Text, FlatList, TouchableOpacity, Alert, StyleSheet, ActivityIndi
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CreditCardInput, LiteCreditCardInput } from 'react-native-credit-card-input';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Vibration } from 'react-native';
 
 export default function Checkout({ route, navigation }) {
   const { carrinho = [], limparCarrinho = () => {} } = route?.params || {};
@@ -51,6 +52,7 @@ export default function Checkout({ route, navigation }) {
       await new Promise(resolve => setTimeout(resolve, 1500));
       
       await salvarPedidoNoHistorico();
+      Vibration.vibrate(500);
       await limparCarrinho();
       
       Alert.alert(
@@ -70,8 +72,6 @@ export default function Checkout({ route, navigation }) {
   const getNomeMetodoPagamento = () => {
     switch(metodoPagamento) {
       case 'pix': return 'PIX';
-      case 'cartao': return 'Cartão de Crédito';
-      case 'boleto': return 'Boleto Bancário';
       default: return '';
     }
   };
@@ -130,54 +130,10 @@ export default function Checkout({ route, navigation }) {
         {metodoPagamento === 'pix' && <Icon name="check-circle" size={20} color="#6200ee" />}
       </TouchableOpacity>
       
-      <TouchableOpacity 
-        style={[styles.botaoMetodo, metodoPagamento === 'cartao' && styles.botaoMetodoSelecionado]}
-        onPress={() => {
-          setMetodoPagamento('cartao');
-          setEtapa('pagamento');
-        }}
-      >
-        <Icon name="credit-card" size={24} color={metodoPagamento === 'cartao' ? '#6200ee' : '#666'} />
-        <Text style={styles.textoMetodo}>Cartão de Crédito</Text>
-        {metodoPagamento === 'cartao' && <Icon name="check-circle" size={20} color="#6200ee" />}
-      </TouchableOpacity>
-      
-      <TouchableOpacity 
-        style={[styles.botaoMetodo, metodoPagamento === 'boleto' && styles.botaoMetodoSelecionado]}
-        onPress={() => setMetodoPagamento('boleto')}
-      >
-        <Icon name="receipt" size={24} color={metodoPagamento === 'boleto' ? '#6200ee' : '#666'} />
-        <Text style={styles.textoMetodo}>Boleto Bancário</Text>
-        {metodoPagamento === 'boleto' && <Icon name="check-circle" size={20} color="#6200ee" />}
-      </TouchableOpacity>
     </View>
   );
 
-  const renderPagamentoCartao = () => (
-    <View style={styles.secaoCartao}>
-      <TouchableOpacity 
-        style={styles.botaoVoltar}
-        onPress={() => setEtapa('selecao')}
-      >
-        <Icon name="arrow-back" size={24} color="#6200ee" />
-        <Text style={styles.textoVoltar}>Voltar</Text>
-      </TouchableOpacity>
-      
-      <Text style={styles.tituloSecao}>Informações do Cartão</Text>
-      
-      <CreditCardInput 
-        onChange={setDadosCartao}
-        requiresName
-        requiresCVC
-        cardScale={1.0}
-        labelStyle={styles.rotuloCartao}
-        inputStyle={styles.inputCartao}
-        validColor="#000"
-        invalidColor="red"
-        placeholderColor="#999"
-      />
-    </View>
-  );
+  
 
   return (
     <View style={styles.container}>

@@ -174,31 +174,7 @@ const handleLogout = () => {
         </View>
       </View>
 
-      <View style={styles.profileSection}>
-        <Text style={styles.sectionTitle}>Configurações</Text>
-
-        <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('EditProfile')}>
-          <Icon name="edit" size={24} color="#666" />
-          <Text style={styles.menuText}>Editar Perfil</Text>
-          <Icon name="chevron-right" size={24} color="#999" />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('ChangePassword')}>
-          <Icon name="lock" size={24} color="#666" />
-          <Text style={styles.menuText}>Alterar Senha</Text>
-          <Icon name="chevron-right" size={24} color="#999" />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Preferences')}>
-          <Icon name="settings" size={24} color="#666" />
-          <Text style={styles.menuText}>Preferências</Text>
-          <Icon name="chevron-right" size={24} color="#999" />
-        </TouchableOpacity>
-      </View>
-
-      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-        <Text style={styles.logoutText}>Sair da Conta</Text>
-      </TouchableOpacity>
+     
     </ScrollView>
   );
 }
