@@ -1,7 +1,7 @@
 const produtosFake = [
   {
     id: 1,
-    nome: "LIBERTA",
+    nome: "LIBERTADORES",
     preco: 275.50,
     imagem: 'https://i.ibb.co/84Rgptx5/IMG-8100.jpg',
     imagens: [

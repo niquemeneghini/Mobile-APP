@@ -26,7 +26,6 @@ const LoginScreen = ({ setIsLoggedIn, navigation }) => {
   const [passwordError, setPasswordError] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
 
-  // Validação em tempo real
   useEffect(() => {
     validateForm();
   }, [email, password]);
@@ -34,7 +33,6 @@ const LoginScreen = ({ setIsLoggedIn, navigation }) => {
   const validateForm = () => {
     let valid = true;
 
-    // Validação de email
     if (!email.trim()) {
       setEmailError('');
       valid = false;
@@ -45,7 +43,6 @@ const LoginScreen = ({ setIsLoggedIn, navigation }) => {
       setEmailError('');
     }
 
-    // Validação de senha
     if (!password) {
       setPasswordError('');
       valid = false;
@@ -105,18 +102,6 @@ const LoginScreen = ({ setIsLoggedIn, navigation }) => {
       });
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const handleForgotPassword = () => {
-    if (!email) {
-      Alert.alert(
-        'Recuperação de senha',
-        'Por favor, informe seu e-mail no campo acima antes de recuperar sua senha.',
-        [{ text: 'OK' }]
-      );
-    } else {
-      navigation.navigate('ForgotPassword', { email });
     }
   };
 
@@ -204,7 +189,7 @@ const LoginScreen = ({ setIsLoggedIn, navigation }) => {
                 ) : (
                   <Text style={styles.buttonText}>Entrar</Text>
                 )}
-              </TouchableOpacity>  
+              </TouchableOpacity>
             </View>
 
             <View style={styles.footer}>
@@ -269,7 +254,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderWidth: 1,
     borderColor: '#ddd',
-    paddingRight: 40, // Espaço para ícones
+    paddingRight: 40,
   },
   inputError: {
     borderColor: '#ff4444',
@@ -305,15 +290,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  forgotPassword: {
-    alignSelf: 'flex-end',
-    marginTop: 16,
-  },
-  linkText: {
-    color: '#6200ee',
-    fontSize: 14,
-    fontWeight: '500',
-  },
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -322,6 +298,11 @@ const styles = StyleSheet.create({
   footerText: {
     color: '#fff',
     fontSize: 14,
+  },
+  linkText: {
+    color: '#6200ee',
+    fontSize: 14,
+    fontWeight: '500',
   },
   registerText: {
     fontWeight: 'bold',

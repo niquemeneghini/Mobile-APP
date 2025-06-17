@@ -5,119 +5,188 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
-  Alert,
+  StyleSheet,
+  ImageBackground,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
-import styles from '../styles/styles';
-import { saveUser } from '../../core/services/authService';
+import Toast from 'react-native-toast-message';
+import { saveUser, checkLogin, getUserName } from '../../core/services/authService';
 
-export default function RegisterScreen({ navigation }) {
+const backgroundImage = require('../../assets/background.png');
+
+const RegisterScreen = ({ setIsLoggedIn, navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState({
-    name: false,
-    email: false,
-    password: false,
-  });
 
-  const validateForm = () => {
-    const newErrors = {
-      name: !name.trim(),
-      email: !/^\S+@\S+\.\S+$/.test(email),
-      password: password.length < 6,
-    };
-    setErrors(newErrors);
-
-    if (newErrors.name) {
-      Alert.alert('Erro', 'Informe seu nome completo.');
-      return false;
-    }
-    if (newErrors.email) {
-      Alert.alert('Erro', 'E-mail inválido.');
-      return false;
-    }
-    if (newErrors.password) {
-      Alert.alert('Erro', 'A senha deve ter no mínimo 6 caracteres.');
-      return false;
-    }
-    return true;
-  };
+  const isFormValid = name.trim() && /^\S+@\S+\.\S+$/.test(email) && password.length >= 6;
 
   const handleRegister = async () => {
-    if (!validateForm()) return;
+    Keyboard.dismiss();
+    if (!isFormValid) {
+      Toast.show({
+        type: 'error',
+        text1: 'Dados inválidos',
+        text2: 'Preencha todos os campos corretamente.',
+      });
+      return;
+    }
 
     setIsLoading(true);
     try {
-      const createdAt = new Date().toISOString();
-      await saveUser(email, password, false, name, createdAt);
-      Alert.alert('Sucesso', 'Cadastro realizado com sucesso!');
-      navigation.navigate('Login');
+      await saveUser(email, password, name);
+
+      const isLogged = await checkLogin(email, password);
+      if (isLogged) {
+        const userName = await getUserName();
+        setIsLoggedIn(true);
+
+        Toast.show({
+          type: 'success',
+          text1: 'Cadastro realizado!',
+          text2: `Bem-vindo, ${userName}`,
+        });
+
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Home', params: { userName } }],
+        });
+      }
     } catch (error) {
-      const message =
-        error.code === 'auth/email-already-in-use'
-          ? 'Este e-mail já está cadastrado.'
-          : 'Erro ao cadastrar. Tente novamente.';
-      Alert.alert('Erro', message);
+      Toast.show({
+        type: 'error',
+        text1: 'Erro ao cadastrar',
+        text2: error.message || 'Tente novamente.',
+      });
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <View style={styles.registerContainer}>
-      <Text style={styles.registerTitle}>Criar Conta</Text>
+    <ImageBackground
+      
+  source={backgroundImage}
+  style={styles.background}
+  resizeMode="cover"
+  blurRadius={2}
 
-      <TextInput
-        style={[styles.input, errors.name && styles.inputError]}
-        placeholder="Nome completo"
-        value={name}
-        onChangeText={setName}
-        autoCapitalize="words"
-      />
-      {errors.name && <Text style={styles.errorText}>Nome é obrigatório</Text>}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <KeyboardAvoidingView
+          style={styles.container}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
+          <View style={styles.card}>
+            <Text style={styles.title}>Criar conta</Text>
 
-      <TextInput
-        style={[styles.input, errors.email && styles.inputError]}
-        placeholder="E-mail"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      {errors.email && <Text style={styles.errorText}>E-mail inválido</Text>}
+            <TextInput
+              placeholder="Nome"
+              placeholderTextColor="#999"
+              value={name}
+              onChangeText={setName}
+              style={styles.input}
+              autoCapitalize="words"
+            />
 
-      <TextInput
-        style={[styles.input, errors.password && styles.inputError]}
-        placeholder="Senha (mínimo 6 caracteres)"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      {errors.password ? (
-        <Text style={styles.errorText}>Mínimo 6 caracteres</Text>
-      ) : (
-        <Text style={styles.passwordHint}>Use pelo menos 6 caracteres</Text>
-      )}
+            <TextInput
+              placeholder="E-mail"
+              placeholderTextColor="#999"
+              value={email}
+              onChangeText={setEmail}
+              style={styles.input}
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
 
-      <TouchableOpacity
-        style={[styles.registerButton, isLoading && styles.disabledButton]}
-        onPress={handleRegister}
-        disabled={isLoading}
-      >
-        {isLoading ? (
-          <ActivityIndicator color="#fff" />
-        ) : (
-          <Text style={styles.buttonText}>Cadastrar</Text>
-        )}
-      </TouchableOpacity>
+            <TextInput
+              placeholder="Senha"
+              placeholderTextColor="#999"
+              value={password}
+              onChangeText={setPassword}
+              style={styles.input}
+              secureTextEntry
+            />
 
-      <View style={styles.loginLinkContainer}>
-        <Text style={styles.loginLinkText}>Já tem uma conta?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.loginLink}>Faça login</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+            <TouchableOpacity
+              onPress={handleRegister}
+              style={[styles.button, (!isFormValid || isLoading) && styles.buttonDisabled]}
+              disabled={!isFormValid || isLoading}
+            >
+              {isLoading ? (
+                <ActivityIndicator color="#121212" />
+              ) : (
+                <Text style={styles.buttonText}>Cadastrar</Text>
+              )}
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Text style={styles.link}>Já tem uma conta? Entrar</Text>
+            </TouchableOpacity>
+          </View>
+          <Toast />
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
+    </ImageBackground>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#121212',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  card: {
+    backgroundColor: '#1e1e1e',
+    borderRadius: 12,
+    padding: 24,
+    elevation: 4,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  input: {
+    backgroundColor: '#2a2a2a',
+    borderRadius: 8,
+    padding: 16,
+    fontSize: 16,
+    marginBottom: 16,
+    color: '#fff',
+  },
+  button: {
+    backgroundColor: '#bb86fc',
+    borderRadius: 8,
+    padding: 16,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  buttonDisabled: {
+    backgroundColor: '#555',
+  },
+  buttonText: {
+    color: '#121212',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  link: {
+    color: '#bb86fc',
+    textAlign: 'center',
+    marginTop: 20,
+    fontSize: 14,
+  },
+});
+
+export default RegisterScreen;
