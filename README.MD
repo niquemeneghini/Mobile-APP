@@ -21,3 +21,4 @@ npm install --global @expo/ngrok@^4.1.0
 
 npm install react-native-credit-card-input
 expo install expo-image-picker
+npm install --save-dev @react-native-async-storage/async-storage/jest

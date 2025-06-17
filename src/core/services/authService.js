@@ -37,10 +37,10 @@ export async function saveUser(email, password, name) {
 
 // Verifica login com base nos usuários salvos
 export async function checkLogin(email, password) {
-  try {
+    try {
     const usersRaw = await AsyncStorage.getItem('usuarios');
     const users = usersRaw ? JSON.parse(usersRaw) : {};
-
+      
     const user = users[email];
     if (!user) return false;
 
@@ -53,15 +53,15 @@ export async function checkLogin(email, password) {
     }
 
     return isValid;
-  } catch (error) {
+    } catch (error) {
     console.error('Erro ao verificar login:', error);
-    return false;
-  }
+      return false;
+    }
 }
 
 // Retorna o nome do usuário logado
 export async function getUserName() {
-  try {
+    try {
     const currentEmail = await AsyncStorage.getItem('usuario_logado');
     if (!currentEmail) return null;
 
@@ -71,7 +71,7 @@ export async function getUserName() {
     return users[currentEmail]?.name || null;
   } catch (error) {
     console.error('Erro ao obter nome do usuário:', error);
-    return null;
+      return null;
   }
 }
 
@@ -79,15 +79,15 @@ export async function getUserName() {
 export async function getUserEmail() {
   try {
     return await AsyncStorage.getItem('usuario_logado');
-  } catch (error) {
+    } catch (error) {
     console.error('Erro ao obter email do usuário logado:', error);
     return null;
-  }
+    }
 }
 
 // Retorna a data de criação da conta do usuário logado
 export async function getUserCreatedAt() {
-  try {
+    try {
     const currentEmail = await AsyncStorage.getItem('usuario_logado');
     if (!currentEmail) return null;
 
@@ -101,11 +101,11 @@ export async function getUserCreatedAt() {
     }
 
     return null;
-  } catch (error) {
+    } catch (error) {
     console.error('Erro ao obter data de criação:', error);
     return null;
+    }
   }
-}
 
 // Remove o usuário atualmente logado
 export async function clearUser() {

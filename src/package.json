@@ -8,23 +8,27 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "test": "jest --watchAll"
   },
   "dependencies": {
     "@expo/metro-runtime": "~5.0.4",
     "@expo/vector-icons": "^14.1.0",
-    "@react-native-async-storage/async-storage": "^2.2.0",
+    "@react-native-community/cli": "latest",
     "@react-navigation/drawer": "*",
     "@react-navigation/native": "^7.1.9",
     "@react-navigation/native-stack": "^7.3.13",
     "@react-navigation/stack": "*",
+    "@testing-library/react-native": "^13.2.0",
+    "@types/jest": "^30.0.0",
     "expo": "^53.0.10",
     "expo-crypto": "~14.1.5",
     "expo-image-picker": "~16.1.4",
     "expo-location": "~18.1.5",
     "expo-status-bar": "~2.2.3",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "jest-expo": "~53.0.7",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "react-native": "0.79.3",
     "react-native-credit-card-input": "^1.0.0",
     "react-native-gesture-handler": "~2.24.0",
@@ -36,8 +40,15 @@
     "react-native-vector-icons": "^10.2.0",
     "react-native-web": "^0.20.0"
   },
+  "jest": {
+    "preset": "jest-expo"
+  },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "@react-native-async-storage/async-storage": "^2.2.0",
+    "@types/react": "~19.0.10",
+    "ts-node": "^10.9.2",
+    "typescript": "~5.8.3"
   },
   "private": true
 }

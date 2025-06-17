@@ -3,9 +3,9 @@ const produtosFake = [
     id: 1,
     nome: "LIBERTADORES",
     preco: 275.50,
-    imagem: 'https://i.ibb.co/84Rgptx5/IMG-8100.jpg',
+    imagem: 'https://i.ibb.co/Hfhd6qr5/IMG-8096.jpg',
     imagens: [
-      'https://i.ibb.co/84Rgptx5/IMG-8100.jpg',
+      'https://i.ibb.co/Hfhd6qr5/IMG-8096.jpg',
      
     ],
   },
@@ -13,7 +13,7 @@ const produtosFake = [
     id: 2,
     nome: "MUNDIAL DE CLUBES VERSÃO ANTIGA",
     preco: 320.99,
-    imagem: 'https://i.ibb.co/QjzBSrRm/2b261301-b10c-4833-b243-a532d909ca12.jpg',
+    imagem: 'https://i.ibb.co/tpTcpYZN/5d6c2a0a-806d-4db7-905e-79f029326061.jpg',
   
    
   },
@@ -63,14 +63,14 @@ const produtosFake = [
     id: 9,
     nome: "ZICO",
     preco: 280.60,
-    imagem:    'https://i.ibb.co/KckLB2Gq/32f0b9f0-3240-4e7f-ad44-799fdee15d29.jpg',
+    imagem:    'https://i.ibb.co/GfPNLQ7X/86052695-d304-4019-8ef2-cb3eac66c633.jpg',
     
   },
   {
     id: 10,
     nome: "CHUTEIRA DE OURO",
     preco: 210.10,
-    
+    imagem:'https://i.ibb.co/670B5nNW/772be265-213a-4539-a415-2503706af543.jpg',
   },
   {
     id: 11,
@@ -112,7 +112,7 @@ const produtosFake = [
     id: 16,
     nome: "Champions League",
     preco: 480.20,
-    imagem: 'https://i.ibb.co/4ZL0zZfm/77a7bc77-adfa-45c7-bba7-f3a77921c7df.jpg',
+    imagem: 'https://i.ibb.co/DHgN2Wcv/c59e1946-adf3-4734-ae84-e5c0869438a8.jpg'
     
   },
 ];
