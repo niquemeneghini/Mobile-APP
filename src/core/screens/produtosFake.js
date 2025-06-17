@@ -112,7 +112,7 @@ const produtosFake = [
     id: 16,
     nome: "Champions League",
     preco: 480.20,
-    imagem: 'https://i.ibb.co/DHgN2Wcv/c59e1946-adf3-4734-ae84-e5c0869438a8.jpg',
+    imagem: 'https://i.ibb.co/DHgN2Wcv/c59e1946-adf3-4734-ae84-e5c0869438a8.jpg'
     
   },
 ];
